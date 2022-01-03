@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: 40063b1f45df13c4ba12fcd6c9e2bb50
+    m_Address: Assets/Brzusko/Scenes/Singletons.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9f1b6f99623a2ac4aae45fb1b25a5abe, type: 2}
   m_SchemaSet:

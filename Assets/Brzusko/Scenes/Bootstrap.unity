@@ -457,6 +457,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cf7979123f842449cabf8e013c4b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scenesToLoad:
+  - m_AssetGUID: 40063b1f45df13c4ba12fcd6c9e2bb50
+    m_SubObjectName: 
+    m_SubObjectType: 
+  - m_AssetGUID: d593f1010df5e5942ae81cac35106d0a
+    m_SubObjectName: 
+    m_SubObjectType: 
+  - m_AssetGUID: 40063b1f45df13c4ba12fcd6c9e2bb50
+    m_SubObjectName: 
+    m_SubObjectType: 
 --- !u!114 &1808686035
 MonoBehaviour:
   m_ObjectHideFlags: 0
