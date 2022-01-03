@@ -181,3 +181,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backendConfigFileName: backend.json
   _credentialsFileName: credentials.cred
+  _backendConfig: {fileID: 11400000, guid: ab9446b0604180c42a214db759193ecc, type: 2}
