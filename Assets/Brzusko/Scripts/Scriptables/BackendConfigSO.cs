@@ -10,6 +10,17 @@ public class BackendConfigSO : ScriptableObject
     public string AccountURL;
     public string VisualsURL;
     public string PositionURL;
+
+    public string[] GetURIs()
+    {
+        return new string[]
+        {
+            AuthURL,
+            AccountURL,
+            VisualsURL,
+            PositionURL
+        };
+    }
 }
 
 [Serializable]
