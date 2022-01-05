@@ -10,13 +10,14 @@ namespace Brzusko.Events
     public class BackendResponseArgs : EventArgs 
     {
         public ServiceType ServiceType { get; set; }
-        public int ErrorCode { get; set; }
-        public string ErrorMessage { get; set; }
+        public long Status { get; set; }
+        public string ResponseMessage { get; set; }
     }
 
     public class BackendPingArgs : EventArgs
     {
         public ServiceType[] SuccessPings { get; set; }
         public ServiceType[] FailedPings { get; set; }
+        public bool CriticalServicesAreDead { get; set; }
     }
 }
