@@ -14,6 +14,14 @@ public class BackendLiveChecker : SingletonT
     [SerializeField]
     private BackendConfigSO _backendConfigSO;
 
+    private readonly ServiceType[] _criticalServices = {
+        ServiceType.AuthService,
+        ServiceType.AccountService
+    };
+
+    private List<ServiceType> _aliveServices = new List<ServiceType>();
+    private List<ServiceType> _deadServices = new List<ServiceType>();
+
     private IEnumerator PingCO()
     {
         var links = _backendConfigSO.GetURIs();
@@ -21,12 +29,9 @@ public class BackendLiveChecker : SingletonT
 
         while(i < links.Length)
         {
-            Debug.Log(links[i]);
-            //if (links[i].Length == 0) continue;
-            using(var request = UnityWebRequest.Get(links[i]))
+            using(var request = UnityWebRequest.Get(links[i].Item2))
             {
                 yield return request.SendWebRequest();
-                Debug.Log(request.result);
             }
             i++;
         }

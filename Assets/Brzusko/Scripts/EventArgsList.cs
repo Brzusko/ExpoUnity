@@ -4,19 +4,19 @@ namespace Brzusko.Events
 {
     public class BackendRequestArgs : EventArgs
     {
-        public string ServiceName { get; set; }
+        public ServiceType ServiceType { get; set; }
     }
 
     public class BackendResponseArgs : EventArgs 
     {
-        public string ServiceName { get; set; }
+        public ServiceType ServiceType { get; set; }
         public int ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
     }
 
     public class BackendPingArgs : EventArgs
     {
-        public BackendResponseArgs[] SuccessPings { get; set; }
-        public BackendResponseArgs[] FailedPings { get; set; }
+        public ServiceType[] SuccessPings { get; set; }
+        public ServiceType[] FailedPings { get; set; }
     }
 }

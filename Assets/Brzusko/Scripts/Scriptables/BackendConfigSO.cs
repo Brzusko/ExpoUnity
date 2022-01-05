@@ -11,14 +11,14 @@ public class BackendConfigSO : ScriptableObject
     public string VisualsURL;
     public string PositionURL;
 
-    public string[] GetURIs()
+    public Tuple<ServiceType, string>[] GetURIs()
     {
-        return new string[]
+        return new Tuple<ServiceType, string>[]
         {
-            AuthURL,
-            AccountURL,
-            VisualsURL,
-            PositionURL
+            new Tuple<ServiceType, string>(ServiceType.AuthService, AuthURL),
+            new Tuple<ServiceType, string>(ServiceType.AccountService, AccountURL),
+            new Tuple<ServiceType, string>(ServiceType.VisualsService, VisualsURL),
+            new Tuple<ServiceType, string>(ServiceType.PositionService, PositionURL)
         };
     }
 }
@@ -30,4 +30,12 @@ public class BackendConfigFileData
     public string AccountURL;
     public string VisualsURL;
     public string PositionURL;
+}
+
+public enum ServiceType
+{
+    AuthService,
+    AccountService,
+    VisualsService,
+    PositionService,      
 }
