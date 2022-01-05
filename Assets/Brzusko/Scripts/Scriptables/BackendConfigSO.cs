@@ -11,15 +11,15 @@ public class BackendConfigSO : ScriptableObject
     public string VisualsURL;
     public string PositionURL;
 
-    public Tuple<ServiceType, string>[] GetURIs()
+    public Stack<Tuple<ServiceType, string>> GetURIs()
     {
-        return new Tuple<ServiceType, string>[]
-        {
+        return new Stack<Tuple<ServiceType, string>>
+        (new[] {
             new Tuple<ServiceType, string>(ServiceType.AuthService, AuthURL),
             new Tuple<ServiceType, string>(ServiceType.AccountService, AccountURL),
             new Tuple<ServiceType, string>(ServiceType.VisualsService, VisualsURL),
             new Tuple<ServiceType, string>(ServiceType.PositionService, PositionURL)
-        };
+        });
     }
 }
 

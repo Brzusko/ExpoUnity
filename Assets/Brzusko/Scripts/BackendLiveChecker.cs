@@ -27,14 +27,14 @@ public class BackendLiveChecker : SingletonT
     private IEnumerator PingCO()
     {
         var links = _backendConfigSO.GetURIs();
-        int i = 0;
 
-        while(i < links.Length)
+        while(links.Count != 0)
         {
-            var serviceType = links[i].Item1;
-            var uri = links[i].Item2;
+            var link = links.Pop();
+            var serviceType = link.Item1;
+            var uri = link.Item2;
 
-            using(var request = UnityWebRequest.Get(links[i].Item2))
+            using(var request = UnityWebRequest.Get(uri))
             {
                 SentRequest?.Invoke(this, new BackendRequestArgs{ ServiceType = serviceType });
 
@@ -52,7 +52,6 @@ public class BackendLiveChecker : SingletonT
                     ResponseMessage = request.result.ToString()
                 });
             }
-            i++;
         }
 
         DiscoveryDone?.Invoke(this, new BackendPingArgs
