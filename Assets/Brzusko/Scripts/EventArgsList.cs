@@ -20,4 +20,12 @@ namespace Brzusko.Events
         public ServiceType[] FailedPings { get; set; }
         public bool CriticalServicesAreDead { get; set; }
     }
+
+    [Serializable]
+    public class LoginResponse : EventArgs
+    {
+        public string RefreshKey { get; set; }
+        public string AccessKey { get; set; }
+        public bool WasSuccessful { get; set; }
+    }
 }
