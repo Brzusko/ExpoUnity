@@ -79,8 +79,4 @@ public class BackendLiveChecker : SingletonT
         if(_pingInFly != null) return;
         _pingInFly = StartCoroutine(PingCO());
     }
-    private void Start()
-    {
-        StartPinging();
-    }
 }
