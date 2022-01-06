@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Brzusko.Events;
 
-public class BackendLiveChecker : SingletonT
+public class BackendLiveChecker : MonoBehaviour
 {
     public event EventHandler<BackendRequestArgs> SentRequest;
     public event EventHandler<BackendResponseArgs> RecivedResponse;
     public event EventHandler<BackendPingArgs> DiscoveryDone;
+    
+    private static BackendLiveChecker _instance;
+    public static BackendLiveChecker Instance { get; private set; }
 
     [SerializeField]
     private BackendConfigSO _backendConfigSO;
@@ -17,13 +20,26 @@ public class BackendLiveChecker : SingletonT
     private readonly ServiceType[] _criticalServices = {
         ServiceType.AuthService,
         ServiceType.AccountService,
-        ServiceType.PositionService
     };
 
     private List<ServiceType> _aliveServices = new List<ServiceType>();
     private List<ServiceType> _deadServices = new List<ServiceType>();
 
     private Coroutine _pingInFly;
+
+    private void Awake()
+    {
+        if(_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _instance = this;
+        DontDestroyOnLoad(this);
+        Instance = this;
+    }
+    
     private IEnumerator PingCO()
     {
         var links = _backendConfigSO.GetURIs();

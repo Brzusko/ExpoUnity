@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 1780823493}
   - component: {fileID: 1780823492}
   - component: {fileID: 1780823491}
-  - component: {fileID: 1780823490}
   m_Layer: 0
   m_Name: BootstrapUICamera
   m_TagString: Untagged
@@ -142,18 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1780823490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780823489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &1780823491
 AudioListener:
   m_ObjectHideFlags: 0
@@ -231,6 +218,7 @@ GameObject:
   - component: {fileID: 1808686033}
   - component: {fileID: 1808686034}
   - component: {fileID: 1808686035}
+  - component: {fileID: 1808686036}
   m_Layer: 0
   m_Name: Bootstrap
   m_TagString: Untagged
@@ -288,3 +276,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backendConfigFileName: backend.json
   _backendConfig: {fileID: 11400000, guid: ab9446b0604180c42a214db759193ecc, type: 2}
+--- !u!114 &1808686036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808686032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 491ef8a142ba7c44f8f086a3d2b47d6c, type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2156dc6-1a9d-4a37-ac00-0b7572a9d4e7
+    m_ActionName: Default/Quit[/Keyboard/escape]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 1780823492}
