@@ -16,7 +16,6 @@ public class LoadingScreen : Window
 
     private void Start()
     {
-        Debug.Log("Loaded HUDs");
         var uiRef = UIReferenceHandler.Instance;
         if(!uiRef) return;
         uiRef.SetLoadingScreenRef(this);

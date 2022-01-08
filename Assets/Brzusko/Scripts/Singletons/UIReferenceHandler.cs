@@ -9,6 +9,9 @@ public class UIReferenceHandler : MonoBehaviour
     public LoadingScreen LoadingScreen { get => _loadingScreen; }
     private LoadingScreen _loadingScreen;
 
+    public LoginScreen LoginScreen { get => _loginScreen; }
+    private LoginScreen _loginScreen;
+
     private void Awake()
     {
         if(_instance != null)
@@ -22,4 +25,5 @@ public class UIReferenceHandler : MonoBehaviour
         Instance = this;
     }
     public void SetLoadingScreenRef(LoadingScreen loadingScreen) => _loadingScreen = loadingScreen;
+    public void SetLoginScreenRef(LoginScreen loginScreen) => _loginScreen = loginScreen;
 }
