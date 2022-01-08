@@ -68,7 +68,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Fersnel_Power: 3.72
-    - _GlitterOffset: 0.7
+    - _GlitterOffset: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -91,7 +91,7 @@ Material:
     - _Fersnel_Color: {r: 0, g: 0.745283, b: 0.6590045, a: 0}
     - _Glitter_Color: {r: 1, g: 1, b: 1, a: 1}
     - _NoiseScale: {r: 1, g: 1, b: 0, a: 0}
-    - _Noise_Tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _Noise_Tiling: {r: 10, g: 10, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4097163101735838867
 MonoBehaviour:
