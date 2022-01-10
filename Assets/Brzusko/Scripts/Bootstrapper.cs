@@ -59,11 +59,12 @@ public class Bootstrapper : MonoBehaviour
             return;
         }
 
-        if(!_playerCredentials.KeysExist())
-        {
-            await ChangeToLoginScreen();
-            return;
-        }
+        // if(!_playerCredentials.KeysExist())
+        // {
+        //     await ChangeToLoginScreen();
+        //     return;
+        // }
+        // Login with Refresh token
 
         // await for login
     }

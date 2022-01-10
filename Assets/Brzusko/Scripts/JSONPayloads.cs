@@ -1,43 +1,50 @@
-
-namespace Brzusko.JSONPayload.Request
+using System;
+namespace Brzusko.JSONPayload
 {
-    public class Register
+    public abstract class Payload
+    {
+
+    }
+    [Serializable]
+    public class Register : Payload
     {
         public string name;
     }
 
-    public class LoginCred
+    [Serializable]
+    public class LoginCred : Payload
     {
         public string name;
         public int pinCode;
     }
 
-    public class LoginAuth
+    [Serializable]
+    public class LoginAuth : Payload
     {
         public string token;
     }
-}
 
-namespace Brzusko.JSONPayload.Response
-{
-    public class BackendError
+    [Serializable]
+    public class BackendError : Payload
     {
         public int errorCode;
         public string errorMessage;
     }
-
-    public class Credentials
+    [Serializable]
+    public class Credentials : Payload
     {
         public string accessToken;
         public string refreshToken;
     }
 
-    public class Success
+    [Serializable]
+    public class Success : Payload
     {
         public string message;
     }
 
-    public class AuthSuccess
+    [Serializable]
+    public class AuthSuccess : Payload
     {
         public string message;
         public Credentials credentials;

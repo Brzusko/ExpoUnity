@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class LoginScreen : Window
 {
@@ -14,6 +15,12 @@ public class LoginScreen : Window
     private BaseValidator[] _loginFields;
     [SerializeField]
     private BaseValidator _registerField;
+    [SerializeField]
+    private TMP_InputField _registerInput;
+    [SerializeField]
+    private TMP_InputField _loginInput;
+    [SerializeField]
+    private TMP_InputField _pinCodeInput;
 
     private void Start()
     {
@@ -36,13 +43,13 @@ public class LoginScreen : Window
     public async void SubmitLogin()
     {
         if(!PlayerCredentials.Instance.IsActionDone || !ValidateLogin()) return;
-        await PlayerCredentials.Instance.Login();
+        //await PlayerCredentials.Instance.Login();
     }
 
     public async void SubmitRegister()
     {
         if(!PlayerCredentials.Instance.IsActionDone || !ValidateRegister()) return;
-        await PlayerCredentials.Instance.Login();
+        //var result = await PlayerCredentials.Instance.Register(_registerInput.text);
     }
 
 }
