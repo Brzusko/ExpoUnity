@@ -5,7 +5,7 @@ using UnityEngine;
 public class Window : MonoBehaviour
 {
     protected bool _isActive = false;
-    public bool Active
+    public virtual bool Active
     {
         get => _isActive;
         set

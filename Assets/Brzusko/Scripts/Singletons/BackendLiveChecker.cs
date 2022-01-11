@@ -49,7 +49,7 @@ public class BackendLiveChecker : MonoBehaviour
             var link = links.Pop();
             var serviceType = link.Item1;
             var uri = link.Item2;
-
+            
             using(var request = UnityWebRequest.Get(uri))
             {
                 SentRequest?.Invoke(this, new BackendRequestArgs{ ServiceType = serviceType });

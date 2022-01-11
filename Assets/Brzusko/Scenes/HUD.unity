@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &135927335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &135927338
 RectTransform:
@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 202228645}
   - component: {fileID: 202228647}
   - component: {fileID: 202228646}
+  - component: {fileID: 202228648}
   m_Layer: 5
   m_Name: ServerResponse
   m_TagString: Untagged
@@ -434,7 +435,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c5296f02773a94842a37e57dcc490320, type: 2}
   m_sharedMaterial: {fileID: 7997086846045700066, guid: c5296f02773a94842a37e57dcc490320, type: 2}
@@ -497,7 +498,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.7992592, z: 0, w: 0}
+  m_margin: {x: 15, y: 15, z: 15, w: 15}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -511,6 +512,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202228644}
   m_CullTransparentMesh: 1
+--- !u!114 &202228648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202228644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4d2213f24f8d34bbcf3eb2df91f5b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &287810304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1356,7 @@ MonoBehaviour:
   _registerInput: {fileID: 1444873106}
   _loginInput: {fileID: 6542921080336772478}
   _pinCodeInput: {fileID: 333574162}
+  _tempLabel: {fileID: 202228648}
 --- !u!1 &657901226 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6542921081951800784, guid: 3e4600d4bfcb89448b3c7b4f02fc83ed, type: 3}

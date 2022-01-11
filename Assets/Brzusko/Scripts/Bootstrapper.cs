@@ -21,6 +21,7 @@ public class Bootstrapper : MonoBehaviour
     private Camera _bootstrapCamera;
     private BackendLiveChecker _backendLiveChecker;
     private LoadingScreen _loadingScreen;
+    private LoginScreen _loginScreen;
     private PlayerCredentials _playerCredentials;
     private PlayerInput _inputs;
     private bool _applicationExitIsActive = false;
@@ -59,11 +60,11 @@ public class Bootstrapper : MonoBehaviour
             return;
         }
 
-        // if(!_playerCredentials.KeysExist())
-        // {
-        //     await ChangeToLoginScreen();
-        //     return;
-        // }
+        if(!_playerCredentials.KeysExist())
+        {
+            await ChangeToLoginScreen();
+            return;
+        }
         // Login with Refresh token
 
         // await for login
@@ -76,6 +77,7 @@ public class Bootstrapper : MonoBehaviour
         var _offlineScene = await _loginScene.LoadSceneAsync(LoadSceneMode.Additive, true).Task;
         await Task.Delay(5 * 1000);
         _loadingScreen.Active = false;
+        _loginScreen.Active = true;
     }
 
     private void OnQuitPressed(InputAction.CallbackContext ctx)
@@ -110,6 +112,7 @@ public class Bootstrapper : MonoBehaviour
         _backendLiveChecker = BackendLiveChecker.Instance;
         _loadingScreen = UIReferenceHandler.Instance.LoadingScreen;
         _playerCredentials = PlayerCredentials.Instance;
+        _loginScreen = UIReferenceHandler.Instance.LoginScreen;
         _inputs = GetComponent<PlayerInput>();
     }
 

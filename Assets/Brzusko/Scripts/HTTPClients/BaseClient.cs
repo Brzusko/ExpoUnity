@@ -32,33 +32,38 @@ namespace Brzusko.HTTP
             var dataAsJson = JsonUtility.ToJson(dataToSend);
             Debug.Log("Serialized data: " + dataAsJson);
 
-            var result = new BackendResult<T>();
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(dataAsJson);
 
-            using var request = UnityWebRequest.Post(uri, dataAsJson);
+            var result = new BackendResult<T>();
+            // fic https://stackoverflow.com/questions/60862424/how-to-post-my-data-using-unitywebrequest-post-api-call
+            // propably jsonUtility is corrupted
+            using var request = new UnityWebRequest(uri, "POST");
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
             foreach(var header in _headers)
                 request.SetRequestHeader(header.Item1, header.Item2);
 
             Debug.Log("Sending poest request to " + uri);
-
-            var operation = request.SendWebRequest();
-
-            while(!operation.isDone)
-                await Task.Yield();
             
-            _isActionDone = true;
-            
-            if(request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error with request: " + uri);
-                result.Error = new BackendError{ errorMessage = request.error, errorCode = (int)request.responseCode };
-                return result;
-            }
-
-            var responseData = request.downloadHandler.text;
-
             try
             {
+                var operation = request.SendWebRequest();
+
+                while(!operation.isDone)
+                    await Task.Yield();
+                
+                _isActionDone = true;
+                
+                if(request.result != UnityWebRequest.Result.Success)
+                {
+                    result.Error = new BackendError{ errorMessage = request.error, errorCode = (int)request.responseCode };
+                    Debug.LogError("Error with request: " + uri + " ### " + result.Error.errorMessage);
+                    return result;
+                }
+
+                var responseData = request.downloadHandler.text;
+
                 if(request.responseCode == _errorStatusCode)
                 {
                     var error = JsonUtility.FromJson<BackendError>(responseData);
@@ -67,6 +72,7 @@ namespace Brzusko.HTTP
                     return result;
                 }
 
+                Debug.Log(responseData);
                 var data = JsonUtility.FromJson<T>(responseData);
                 result.Result = data;
 
@@ -76,7 +82,6 @@ namespace Brzusko.HTTP
                 Debug.LogError("Parsing JSON error: " + ex.Message);
                 return null;
             }
-
 
             return result;
         }

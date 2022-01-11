@@ -1,7 +1,4 @@
 using System;
-using Brzusko.JSONPayload.Response;
-using Brzusko.JSONPayload.Request;
-
 namespace Brzusko.Events
 {
     public class BackendRequestArgs : EventArgs
@@ -21,5 +18,10 @@ namespace Brzusko.Events
         public ServiceType[] SuccessPings { get; set; }
         public ServiceType[] FailedPings { get; set; }
         public bool CriticalServicesAreDead { get; set; }
+    }
+
+    public class BasicMassage : EventArgs
+    {
+        public string Message { get; set; }
     }
 }
