@@ -12,6 +12,9 @@ public class UIReferenceHandler : MonoBehaviour
     public LoginScreen LoginScreen { get => _loginScreen; }
     private LoginScreen _loginScreen;
 
+    public CrosshairWIndow Crosshair { get => _crosshair; }
+    private CrosshairWIndow _crosshair;
+
     private void Awake()
     {
         if(_instance != null)
@@ -26,4 +29,5 @@ public class UIReferenceHandler : MonoBehaviour
     }
     public void SetLoadingScreenRef(LoadingScreen loadingScreen) => _loadingScreen = loadingScreen;
     public void SetLoginScreenRef(LoginScreen loginScreen) => _loginScreen = loginScreen;
+    public void SetCrosshairRef(CrosshairWIndow crosshair) => _crosshair = crosshair;
 }
