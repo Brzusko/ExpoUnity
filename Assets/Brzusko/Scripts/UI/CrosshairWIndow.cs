@@ -8,7 +8,7 @@ public class CrosshairWIndow : Window
     private Color _baseColor;
     [SerializeField]
     private Color _targetColor;
-
+    [SerializeField]
     private Image _crosshairImage;
     private void Start()
     {

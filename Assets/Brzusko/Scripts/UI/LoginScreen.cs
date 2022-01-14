@@ -35,10 +35,6 @@ public class LoginScreen : Window
         set
         {
             base.Active = value;
-            if(value)
-                ConnectEvents();
-            else
-                DisconnectEvents();
         }
     }
 
@@ -74,28 +70,6 @@ public class LoginScreen : Window
         await PlayerCredentials.Instance.Register(_registerInput.text);
     }
 
-    protected virtual void DisplayMassage(object sender, BasicMassage message) => _tempLabel.DisplayText(message.Message, 20f);
-    protected virtual void LoginSuccess(object sender, BasicMassage message)
-    {
-        // TODO
-        Active = false;
-    }
+    public void DisplayMassage(string message) => _tempLabel.DisplayText(message, 20f);
 
-    private void ConnectEvents()
-    {
-        var playerCred = PlayerCredentials.Instance;
-        playerCred.RegisterComplete += DisplayMassage;
-        playerCred.RegisterFailed += DisplayMassage;
-        playerCred.LoginFailed += DisplayMassage;
-        playerCred.LoginComplete += LoginSuccess;
-    }
-
-    private void DisconnectEvents()
-    {
-        var playerCred = PlayerCredentials.Instance;
-        playerCred.RegisterComplete -= DisplayMassage;
-        playerCred.RegisterFailed -= DisplayMassage;
-        playerCred.LoginFailed -= DisplayMassage;
-        playerCred.LoginComplete -= LoginSuccess;
-    }
 }

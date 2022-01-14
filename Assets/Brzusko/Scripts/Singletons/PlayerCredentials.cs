@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Brzusko.Events;
 using Brzusko.HTTP;
+using Brzusko.JSONPayload;
 
 public class PlayerCredentials : MonoBehaviour
 {
@@ -50,11 +51,6 @@ public class PlayerCredentials : MonoBehaviour
         return PlayerPrefs.HasKey(AUTH_KEY_LOCATION) && PlayerPrefs.HasKey(REFRESH_KEY_LOCATION);
     }
 
-    public bool IsPlayerLoggedIn()
-    {
-        return KeysExist();
-    }
-
     public async Task LoginCred(string name, int pinCode)
     {
         if(!_isActionDone) return;
@@ -63,17 +59,42 @@ public class PlayerCredentials : MonoBehaviour
         var httpClient = new LoginClient(_backendConfig);
         var result = await httpClient.LoginCred(name, pinCode);
 
-        if(result == null)
-            LoginFailed.Invoke(this, new BasicMassage{ Message = "Username or pincode is not valid!" });
-        else
-            LoginComplete.Invoke(this, new BasicMassage{ Message = "Logged in!" });
+        PropagateLoginEvents(result);
 
         _isActionDone = true;
     }
 
     public async Task LoginRef()
     {
-        await Task.Delay(1);
+        if(!_isActionDone) return;
+        _isActionDone = false;
+
+        if(!KeysExist())
+        {
+            LoginFailed?.Invoke(this, new BasicMassage { Message = "Missing refresh token!" });
+            return;
+        }
+
+        var key = PlayerPrefs.GetString(REFRESH_KEY_LOCATION);
+        var httpClient = new LoginClient(_backendConfig);
+        var result = await httpClient.LoginRef(key);
+
+        PropagateLoginEvents(result);
+
+        _isActionDone = true;
+    }
+
+    private void PropagateLoginEvents(Credentials result)
+    {
+        if(result == null)
+            LoginFailed.Invoke(this, new BasicMassage{ Message = "Username or pincode is not valid!" });
+        else
+            LoginComplete.Invoke(this, new BasicMassage{ Message = "Logged in!" });
+    }
+
+    private void SaveKeys(Credentials credentials)
+    {
+        
     }
 
     public async Task Register(string name)

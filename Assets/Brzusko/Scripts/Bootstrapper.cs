@@ -10,22 +10,33 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using Brzusko.Events;
 
+public enum SceneType
+{
+    LoginScene = 0,
+    Simulation = 1,
+}
+
+public class SceneWrapper
+{
+    public Scene Scene;
+}
+
 public class Bootstrapper : MonoBehaviour
 {
     [SerializeField]
     private AssetReference[] _crucialScenes;
     [SerializeField]
-    private AssetReference _loginScene;
-
+    private AssetReference[] _scenes;
     [SerializeField]
     private Camera _bootstrapCamera;
     private BackendLiveChecker _backendLiveChecker;
     private LoadingScreen _loadingScreen;
-    private LoginScreen _loginScreen;
     private PlayerCredentials _playerCredentials;
     private PlayerInput _inputs;
     private bool _applicationExitIsActive = false;
-    private SceneInstance _offlineScene;
+    private SceneWrapper _currentScene = null;
+    private static Bootstrapper _instance;
+    public Bootstrapper Instance => _instance;
 
     private async void Start()
     {
@@ -34,6 +45,7 @@ public class Bootstrapper : MonoBehaviour
         EnableInputs();
         ConnectEvents();
         _backendLiveChecker.StartPinging(); 
+        _instance = this;
     }
 
     private void OnDestroy()
@@ -60,24 +72,28 @@ public class Bootstrapper : MonoBehaviour
             return;
         }
 
-        if(!_playerCredentials.KeysExist())
-        {
-            await ChangeToLoginScreen();
-            return;
-        }
-        // Login with Refresh token
-
-        // await for login
+        DisconnectEvents();
+        await LoadScene(SceneType.LoginScene);
+        DestroyImmediate(_bootstrapCamera.gameObject);
     }
 
-    private async Task ChangeToLoginScreen()
+    public async Task LoadScene(SceneType sceneToLoad)
     {
-        _loadingScreen.ChangeLoadingInfo("Loading login scene");
-        DestroyImmediate(_bootstrapCamera.gameObject);
-        var _offlineScene = await _loginScene.LoadSceneAsync(LoadSceneMode.Additive, true).Task;
-        await Task.Delay(5 * 1000);
-        _loadingScreen.Active = false;
-        _loginScreen.Active = true;
+        if((int)sceneToLoad >= _scenes.Length) return;
+        _loadingScreen.Active = true;
+        _loadingScreen.ChangeLoadingInfo($"Loading: {sceneToLoad.ToString()}");
+        await Task.Delay(3 * 1000);
+        var sceneRef = _scenes[(int)sceneToLoad]; 
+        var sceneInstance = await sceneRef.LoadSceneAsync(LoadSceneMode.Additive, true).Task;
+
+        if(_currentScene != null)
+        {
+            var operation = SceneManager.UnloadSceneAsync(_currentScene.Scene);
+            while(!operation.isDone)
+                await Task.Yield();
+        }
+
+        _currentScene = new SceneWrapper{ Scene = sceneInstance.Scene };
     }
 
     private void OnQuitPressed(InputAction.CallbackContext ctx)
@@ -112,7 +128,6 @@ public class Bootstrapper : MonoBehaviour
         _backendLiveChecker = BackendLiveChecker.Instance;
         _loadingScreen = UIReferenceHandler.Instance.LoadingScreen;
         _playerCredentials = PlayerCredentials.Instance;
-        _loginScreen = UIReferenceHandler.Instance.LoginScreen;
         _inputs = GetComponent<PlayerInput>();
     }
 

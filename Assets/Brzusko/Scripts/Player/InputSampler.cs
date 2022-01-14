@@ -15,19 +15,9 @@ public class InputSampler : MonoBehaviour
         get => _inputSample;
     }
 
-    private bool _isInitialized = false;
+    private void Start() => _playerInput.ActivateInput();
 
-    private void Start()
-    {
-        _isInitialized = true;
-        _playerInput.ActivateInput();
-    }
-
-    private void OnDisable()
-    {
-        _isInitialized = false;
-        _playerInput.DeactivateInput();    
-    }
+    private void OnDisable() => _playerInput.DeactivateInput();
 
     private void Update() => SampleImput();
 
