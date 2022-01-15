@@ -75,6 +75,14 @@ namespace Brzusko.Scenes
             _loginScreen.DisplayMassage(mess.Message);
         }
 
+        private void OnLogout(object sender, BasicMassage mess)
+        {
+            _player.SetActive(false);
+            SwtichCamera(false);
+            _crosshair.Active = false;
+            _loginScreen.Active = true;
+        }
+
         private void ConnectEvents()
         {
             var playerCred = PlayerCredentials.Instance;
@@ -82,15 +90,17 @@ namespace Brzusko.Scenes
             playerCred.RegisterFailed += OnRegisterFail;
             playerCred.LoginComplete += OnLoginComplete;
             playerCred.LoginFailed += OnLoginFail;
+            playerCred.LogoutComplete += OnLogout;
         }
 
         private void DisconnectEvents()
         {
             var playerCred = PlayerCredentials.Instance;
-            playerCred.RegisterComplete += OnRegisterComplete;
-            playerCred.RegisterFailed += OnRegisterFail;
-            playerCred.LoginComplete += OnLoginComplete;
-            playerCred.LoginFailed += OnLoginFail;
+            playerCred.RegisterComplete -= OnRegisterComplete;
+            playerCred.RegisterFailed -= OnRegisterFail;
+            playerCred.LoginComplete -= OnLoginComplete;
+            playerCred.LoginFailed -= OnLoginFail;
+            playerCred.LogoutComplete -= OnLogout;
         }
 
         private void GetReferences()

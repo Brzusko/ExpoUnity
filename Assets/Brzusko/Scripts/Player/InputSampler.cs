@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputSampler : MonoBehaviour
 {
+    public event EventHandler TriggerAction;
     [SerializeField]
     private PlayerInput _playerInput;
     private bool _isActionPressed;
@@ -15,10 +16,17 @@ public class InputSampler : MonoBehaviour
         get => _inputSample;
     }
 
-    private void Start() => _playerInput.ActivateInput();
+    private void Start()
+    {
+        _playerInput.ActivateInput();
+        _playerInput.actions["Use"].performed += ctx => TriggerAction?.Invoke(this, null);
+    }
 
-    private void OnDisable() => _playerInput.DeactivateInput();
-
+    private void OnDisable()
+    {
+        _playerInput.DeactivateInput();
+        _playerInput.actions["Use"].performed -= ctx => TriggerAction?.Invoke(this, null);
+    }
     private void Update() => SampleImput();
 
     private void SampleImput()
@@ -26,7 +34,6 @@ public class InputSampler : MonoBehaviour
         _inputSample = new InputSample
         {
             Movement = _playerInput.actions["Move"].ReadValue<Vector2>(),
-            TriggerAction = _playerInput.actions["Use"].ReadValue<bool>(),
             MouseDelta = _playerInput.actions["Look"].ReadValue<Vector2>()
         };
     }
@@ -37,6 +44,5 @@ public class InputSampler : MonoBehaviour
 public class InputSample
 {
     public Vector2 Movement;
-    public bool TriggerAction;
     public Vector2 MouseDelta;
 }
