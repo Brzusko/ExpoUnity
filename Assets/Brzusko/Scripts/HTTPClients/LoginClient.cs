@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Brzusko.JSONPayload;
-
+using UnityEngine;
 namespace Brzusko.HTTP
 {
     public class LoginClient : BaseClient
@@ -15,7 +15,7 @@ namespace Brzusko.HTTP
         public async Task<Credentials> LoginCred(string name, int pinCode)
         {
             var loginCred = new LoginCred{ name = name, pinCode = pinCode};
-            var result = await this.Post<Credentials, LoginCred>(_loginCredPath, loginCred);
+            var result = await this.Post<AuthSuccess, LoginCred>(_loginCredPath, loginCred);
             Credentials credentials = null;
 
             if(result.Result == null)
@@ -23,14 +23,14 @@ namespace Brzusko.HTTP
                 return credentials;
             }
 
-            credentials = result.Result;
+            credentials = result.Result.credentials;
             return credentials;
         }
 
         public async Task<Credentials> LoginRef(string token)
         {
             var loginToken = new RefreshToken{ token = token };
-            var result = await this.Post<Credentials, RefreshToken>(_loginRefPath, loginToken);
+            var result = await this.Post<AuthSuccess, RefreshToken>(_loginRefPath, loginToken);
             
             Credentials credentials = null;
 
@@ -39,7 +39,7 @@ namespace Brzusko.HTTP
                 return credentials;
             }
 
-            credentials = result.Result;
+            credentials = result.Result.credentials;
             return credentials;
         }
     }

@@ -33,7 +33,7 @@ namespace Brzusko.JSONPayload
     [Serializable]
     public class Credentials : Payload
     {
-        public string accessToken;
+        public string authToken;
         public string refreshToken;
     }
 
@@ -46,7 +46,7 @@ namespace Brzusko.JSONPayload
     [Serializable]
     public class AuthSuccess : Payload
     {
-        public string message;
+        public Success message;
         public Credentials credentials;
     }
 

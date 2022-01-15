@@ -66,6 +66,12 @@ namespace Brzusko.Scenes
 
         private void OnLoginFail(object sender, BasicMassage mess)
         {
+            if(!_loginScreen.gameObject.activeSelf)
+            {
+                _loadingScreen.Active = false;
+                _loginScreen.Active = true;
+            }
+
             _loginScreen.DisplayMassage(mess.Message);
         }
 

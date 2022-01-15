@@ -59,7 +59,11 @@ public class PlayerCredentials : MonoBehaviour
         var httpClient = new LoginClient(_backendConfig);
         var result = await httpClient.LoginCred(name, pinCode);
 
+        Debug.Log(result.refreshToken);
+        Debug.Log(result.authToken);
+
         PropagateLoginEvents(result);
+        SaveKeys(result);
 
         _isActionDone = true;
     }
@@ -80,6 +84,7 @@ public class PlayerCredentials : MonoBehaviour
         var result = await httpClient.LoginRef(key);
 
         PropagateLoginEvents(result);
+        SaveKeys(result);
 
         _isActionDone = true;
     }
@@ -94,7 +99,15 @@ public class PlayerCredentials : MonoBehaviour
 
     private void SaveKeys(Credentials credentials)
     {
+        if(credentials == null) return;
         
+        if(credentials.authToken != null)
+            PlayerPrefs.SetString(AUTH_KEY_LOCATION, credentials.authToken);
+        
+        if(credentials.refreshToken != null)
+            PlayerPrefs.SetString(REFRESH_KEY_LOCATION, credentials.refreshToken);
+            
+        PlayerPrefs.Save();
     }
 
     public async Task Register(string name)

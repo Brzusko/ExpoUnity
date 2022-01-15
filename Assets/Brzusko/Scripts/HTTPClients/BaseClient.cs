@@ -35,7 +35,7 @@ namespace Brzusko.HTTP
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(dataAsJson);
 
             var result = new BackendResult<T>();
-            // fic https://stackoverflow.com/questions/60862424/how-to-post-my-data-using-unitywebrequest-post-api-call
+            // fix https://stackoverflow.com/questions/60862424/how-to-post-my-data-using-unitywebrequest-post-api-call
             // propably jsonUtility is corrupted
             using var request = new UnityWebRequest(uri, "POST");
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
@@ -58,7 +58,7 @@ namespace Brzusko.HTTP
                 if(request.result != UnityWebRequest.Result.Success)
                 {
                     result.Error = new BackendError{ errorMessage = request.error, errorCode = (int)request.responseCode };
-                    Debug.LogError("Error with request: " + uri + " ### " + result.Error.errorMessage);
+                    Debug.LogWarning("Error with request: " + uri + " ### " + result.Error.errorMessage);
                     return result;
                 }
 
@@ -68,18 +68,19 @@ namespace Brzusko.HTTP
                 {
                     var error = JsonUtility.FromJson<BackendError>(responseData);
                     result.Error = error;
-                    Debug.LogError("Error with query " + uri);
+                    Debug.LogWarning(error.errorMessage);
+                    Debug.LogWarning("Error with query " + uri);
                     return result;
                 }
 
-                Debug.Log(responseData);
+                Debug.LogWarning(responseData);
                 var data = JsonUtility.FromJson<T>(responseData);
                 result.Result = data;
 
             }
             catch(Exception ex)
             {
-                Debug.LogError("Parsing JSON error: " + ex.Message);
+                Debug.LogWarning("Parsing JSON error: " + ex.Message);
                 return null;
             }
 
