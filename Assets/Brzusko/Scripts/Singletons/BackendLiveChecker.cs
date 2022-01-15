@@ -14,16 +14,13 @@ public class BackendLiveChecker : MonoBehaviour
     private static BackendLiveChecker _instance;
     public static BackendLiveChecker Instance { get; private set; }
 
-    [SerializeField]
-    private BackendConfigSO _backendConfigSO;
-
     private readonly ServiceType[] _criticalServices = {
         ServiceType.AuthService,
         ServiceType.AccountService,
     };
 
     private List<ServiceType> _aliveServices = new List<ServiceType>();
-    private List<ServiceType> _deadServices = new List<ServiceType>();
+    private List<Tuple<ServiceType, String>> _deadServices = new List<Tuple<ServiceType, String>>();
 
     private Coroutine _pingInFly;
 
@@ -42,7 +39,7 @@ public class BackendLiveChecker : MonoBehaviour
     
     private IEnumerator PingCO()
     {
-        var links = _backendConfigSO.GetURIs();
+        var links = BackendStaticConfig.GetURIs();
 
         while(links.Count != 0)
         {
@@ -57,7 +54,7 @@ public class BackendLiveChecker : MonoBehaviour
                 yield return request.SendWebRequest();
 
                 if(request.result != UnityWebRequest.Result.Success)
-                    _deadServices.Add(serviceType);
+                    _deadServices.Add(new Tuple<ServiceType, string>(serviceType, uri));
                 else
                     _aliveServices.Add(serviceType);
 
@@ -84,7 +81,7 @@ public class BackendLiveChecker : MonoBehaviour
     {
         foreach(var service in _criticalServices)
         {
-            var exist = _deadServices.Exists(deadService => deadService == service);
+            var exist = _deadServices.Exists(deadService => deadService.Item1 == service);
             if(exist) return true;
         }
         return false;

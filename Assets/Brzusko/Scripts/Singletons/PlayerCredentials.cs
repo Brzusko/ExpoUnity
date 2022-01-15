@@ -14,14 +14,13 @@ public class PlayerCredentials : MonoBehaviour
     public event EventHandler<BasicMassage> RegisterFailed;
     public event EventHandler<BasicMassage> LoginComplete;
     public event EventHandler<BasicMassage> LoginFailed;
+    public event EventHandler<BasicMassage> LogoutComplete;
+
     private static PlayerCredentials _instance;
     public static PlayerCredentials Instance {get; private set;}
     private readonly string AUTH_KEY_LOCATION = "Auth-Key";
     private readonly string REFRESH_KEY_LOCATION = "Ref-Key";
 
-    [Header("Backend Setup")]
-    [SerializeField]
-    private BackendConfigSO _backendConfig;
     private readonly string[] _headers = {
         "Content-Type",
         "application/json"
@@ -56,7 +55,7 @@ public class PlayerCredentials : MonoBehaviour
         if(!_isActionDone) return;
         _isActionDone = false;
 
-        var httpClient = new LoginClient(_backendConfig);
+        var httpClient = new LoginClient();
         var result = await httpClient.LoginCred(name, pinCode);
 
         Debug.Log(result.refreshToken);
@@ -80,7 +79,7 @@ public class PlayerCredentials : MonoBehaviour
         }
 
         var key = PlayerPrefs.GetString(REFRESH_KEY_LOCATION);
-        var httpClient = new LoginClient(_backendConfig);
+        var httpClient = new LoginClient();
         var result = await httpClient.LoginRef(key);
 
         PropagateLoginEvents(result);
@@ -110,11 +109,18 @@ public class PlayerCredentials : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    private void FlushKeys()
+    {
+        PlayerPrefs.DeleteKey(AUTH_KEY_LOCATION);
+        PlayerPrefs.DeleteKey(REFRESH_KEY_LOCATION);
+        PlayerPrefs.Save();
+    }
+
     public async Task Register(string name)
     {
         if(!_isActionDone) return;
         _isActionDone = false;
-        var httpClient = new AccountClient(_backendConfig);
+        var httpClient = new AccountClient();
         var result = await httpClient.CreateAccount(name);
 
         if(result == null)
@@ -123,5 +129,21 @@ public class PlayerCredentials : MonoBehaviour
             RegisterComplete?.Invoke(this, new BasicMassage { Message = $"You can login now with username: {result.credentials.name} and pin code: [{result.credentials.pinCode}]" });
 
         _isActionDone = true;
+    }
+
+    public async Task Logout()
+    {
+        if(!_isActionDone) return;
+        _isActionDone = false;
+
+        var key = PlayerPrefs.GetString(REFRESH_KEY_LOCATION);
+        var httpClient = new LoginClient();
+        var result = await httpClient.Logout(key);
+
+        if(result == null || result.message == null || result.message.Length == 0)
+            return;
+        
+        FlushKeys();
+        LogoutComplete?.Invoke(this, new BasicMassage { Message = result.message });
     }
 }
