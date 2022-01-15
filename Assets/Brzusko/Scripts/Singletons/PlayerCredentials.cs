@@ -140,6 +140,8 @@ public class PlayerCredentials : MonoBehaviour
         var httpClient = new LoginClient();
         var result = await httpClient.Logout(key);
 
+        _isActionDone = true;
+        
         if(result == null || result.message == null || result.message.Length == 0)
             return;
         

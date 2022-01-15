@@ -46,6 +46,7 @@ public class Bootstrapper : MonoBehaviour
         ConnectEvents();
         _backendLiveChecker.StartPinging(); 
         _instance = this;
+        await _playerCredentials.Logout();
     }
 
     private void OnDestroy()
