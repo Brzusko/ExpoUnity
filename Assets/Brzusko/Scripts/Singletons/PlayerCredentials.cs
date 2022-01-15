@@ -124,4 +124,10 @@ public class PlayerCredentials : MonoBehaviour
 
         _isActionDone = true;
     }
+
+    public async Task Logout()
+    {
+        if(!_isActionDone) return;
+        _isActionDone = false;
+    }
 }
