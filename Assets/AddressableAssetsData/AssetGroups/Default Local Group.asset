@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9c4e9963872939f4bbf5f49fe0a1297a
+  m_SerializeEntries:
+  - m_GUID: ab9446b0604180c42a214db759193ecc
+    m_Address: Assets/Settings/BackendConfig.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c823cd0b7359d3a49b9b4ba5ca145d91
+    m_Address: Assets/Brzusko/Scenes/LoginScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fd47a032d0321f6429f71f7ff3249945
+    m_Address: Assets/Brzusko/Scenes/Bootstrap.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d593f1010df5e5942ae81cac35106d0a
+    m_Address: Assets/Brzusko/Scenes/HUD.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 40063b1f45df13c4ba12fcd6c9e2bb50
+    m_Address: Assets/Brzusko/Scenes/Singletons.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d1c3109bdb54ad54c8a2b2838528e640
+    m_Address: Assets/Brzusko/Scenes/SampleScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9f1b6f99623a2ac4aae45fb1b25a5abe, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 92c308f9ca0282843b30ec0c04d48d8f, type: 2}
+    - {fileID: 11400000, guid: 9cf200add00da2a428521f1b879fc616, type: 2}

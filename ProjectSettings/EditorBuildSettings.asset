@@ -5,7 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Brzusko/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 74dfb3d86e826f04f87fa6b3eab9637f, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: d2c955df3a724634eb611c87af51072d, type: 2}
