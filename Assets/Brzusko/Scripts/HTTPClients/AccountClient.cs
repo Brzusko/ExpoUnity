@@ -8,11 +8,11 @@ namespace Brzusko.HTTP
 {
     public class AccountClient : BaseClient
     {
-        protected override string BaseURI { get => _config.AccountURL; }
+        protected override string BaseURI { get => BackendStaticConfig.AccountURL; }
 
         protected readonly string _createPath = "/create";
 
-        public AccountClient(BackendConfigSO config) : base(config)
+        public AccountClient()
         {
         }
 

@@ -16,7 +16,7 @@ namespace Brzusko.Events
     public class BackendPingArgs : EventArgs
     {
         public ServiceType[] SuccessPings { get; set; }
-        public ServiceType[] FailedPings { get; set; }
+        public Tuple<ServiceType, string>[] FailedPings { get; set; }
         public bool CriticalServicesAreDead { get; set; }
     }
 

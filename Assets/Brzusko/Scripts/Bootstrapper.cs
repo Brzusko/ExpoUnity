@@ -67,7 +67,14 @@ public class Bootstrapper : MonoBehaviour
     {
         if(arg.CriticalServicesAreDead)
         {
-            _loadingScreen.ShowErrorMessage("Critical services are dead!");
+            var text = "Critical services are dead!";
+
+            foreach(var deadService in arg.FailedPings)
+                text += $"\n{deadService.Item1} :: {deadService.Item2}";
+            
+            text += $"\n{ConfigLoader._configDir}";
+
+            _loadingScreen.ShowErrorMessage(text);
             _applicationExitIsActive = true;
             return;
         }

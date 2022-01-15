@@ -21,9 +21,6 @@ public class PlayerCredentials : MonoBehaviour
     private readonly string AUTH_KEY_LOCATION = "Auth-Key";
     private readonly string REFRESH_KEY_LOCATION = "Ref-Key";
 
-    [Header("Backend Setup")]
-    [SerializeField]
-    private BackendConfigSO _backendConfig;
     private readonly string[] _headers = {
         "Content-Type",
         "application/json"
@@ -58,7 +55,7 @@ public class PlayerCredentials : MonoBehaviour
         if(!_isActionDone) return;
         _isActionDone = false;
 
-        var httpClient = new LoginClient(_backendConfig);
+        var httpClient = new LoginClient();
         var result = await httpClient.LoginCred(name, pinCode);
 
         Debug.Log(result.refreshToken);
@@ -82,7 +79,7 @@ public class PlayerCredentials : MonoBehaviour
         }
 
         var key = PlayerPrefs.GetString(REFRESH_KEY_LOCATION);
-        var httpClient = new LoginClient(_backendConfig);
+        var httpClient = new LoginClient();
         var result = await httpClient.LoginRef(key);
 
         PropagateLoginEvents(result);
@@ -123,7 +120,7 @@ public class PlayerCredentials : MonoBehaviour
     {
         if(!_isActionDone) return;
         _isActionDone = false;
-        var httpClient = new AccountClient(_backendConfig);
+        var httpClient = new AccountClient();
         var result = await httpClient.CreateAccount(name);
 
         if(result == null)
@@ -140,7 +137,7 @@ public class PlayerCredentials : MonoBehaviour
         _isActionDone = false;
 
         var key = PlayerPrefs.GetString(REFRESH_KEY_LOCATION);
-        var httpClient = new LoginClient(_backendConfig);
+        var httpClient = new LoginClient();
         var result = await httpClient.Logout(key);
 
         if(result == null || result.message == null || result.message.Length == 0)

@@ -10,11 +10,9 @@ namespace Brzusko.HTTP
 {
     public class BaseClient 
     {
-        protected BackendConfigSO _config;
         protected bool _isActionDone = true;
-        public BaseClient(BackendConfigSO config)
+        public BaseClient()
         {
-            _config = config;
         }
         protected virtual string BaseURI { get; set; }
         protected readonly long _errorStatusCode = 201;

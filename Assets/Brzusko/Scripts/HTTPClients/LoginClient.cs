@@ -6,9 +6,8 @@ namespace Brzusko.HTTP
 {
     public class LoginClient : BaseClient
     {
-        protected override string BaseURI { get => _config.AuthURL; }
-        public LoginClient(BackendConfigSO _config) : base(_config) {}
-
+        protected override string BaseURI { get => BackendStaticConfig.AuthURL; }
+        public LoginClient() {}
         protected static readonly string _loginCredPath = "/loginCred";
         protected static readonly string _loginRefPath = "/loginRef";
         protected static readonly string _logoutPath = "/logout";
