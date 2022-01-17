@@ -22,6 +22,9 @@ namespace Brzusko.Scenes
         [SerializeField]
         private GameObject _player;
 
+        [SerializeField]
+        private AboutWindow _playerAccountEditor;
+
         private PlayerCredentials _credentials;
         private LoadingScreen _loadingScreen;
         private LoginScreen _loginScreen;
@@ -35,7 +38,7 @@ namespace Brzusko.Scenes
             ConnectEvents();
 
             if(!_credentials) return;
-    
+
             await InitSequence();
         }
 
@@ -118,6 +121,7 @@ namespace Brzusko.Scenes
         {
             _loadingScreen.ChangeLoadingInfo("Trying to login autologin.");
             _player.SetActive(false);
+            _playerAccountEditor.Active = true;
 
             if(_credentials.KeysExist())
             {
