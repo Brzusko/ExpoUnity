@@ -25,6 +25,12 @@ namespace Brzusko.JSONPayload
     }
 
     [Serializable]
+    public class AccessToken : Payload
+    {
+        public string token;
+    }
+
+    [Serializable]
     public class BackendError : Payload
     {
         public int errorCode;
@@ -55,5 +61,25 @@ namespace Brzusko.JSONPayload
     {
         public Success success;
         public LoginCred credentials;
+    }
+    [Serializable]
+    public class SexSuccess : Payload
+    {
+        public Success message;
+        public string sex;
+    }
+
+    [Serializable]
+    public class AccountDetails : Payload
+    {
+        public string name;
+        public int power;
+    }
+
+    [Serializable]
+    public class SexUpdate : Payload
+    {
+        public string token;
+        public int sex;
     }
 }

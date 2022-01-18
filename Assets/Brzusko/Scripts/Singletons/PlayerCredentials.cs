@@ -32,6 +32,9 @@ public class PlayerCredentials : MonoBehaviour
         get => _isActionDone;
     }
 
+    private AccountDetails _playerDetails = null;
+    public AccountDetails PlayerDetails => _playerDetails;
+    public string AccessToken => PlayerPrefs.GetString(AUTH_KEY_LOCATION);
     private void Awake()
     {
         if(_instance != null)
@@ -58,10 +61,7 @@ public class PlayerCredentials : MonoBehaviour
         var httpClient = new LoginClient();
         var result = await httpClient.LoginCred(name, pinCode);
 
-        Debug.Log(result.refreshToken);
-        Debug.Log(result.authToken);
-
-        PropagateLoginEvents(result);
+        await PropagateLoginEvents(result);
         SaveKeys(result);
 
         _isActionDone = true;
@@ -82,18 +82,27 @@ public class PlayerCredentials : MonoBehaviour
         var httpClient = new LoginClient();
         var result = await httpClient.LoginRef(key);
 
-        PropagateLoginEvents(result);
+        await PropagateLoginEvents(result);
         SaveKeys(result);
 
         _isActionDone = true;
     }
 
-    private void PropagateLoginEvents(Credentials result)
+    private async Task PropagateLoginEvents(Credentials result)
     {
         if(result == null)
             LoginFailed.Invoke(this, new BasicMassage{ Message = "Username or pincode is not valid!" });
         else
+        {
+            _playerDetails = await GetAccountDetails(result.authToken);
             LoginComplete.Invoke(this, new BasicMassage{ Message = "Logged in!" });
+        }
+    }
+
+    public async Task<AccountDetails> GetAccountDetails(string accessToken)
+    {
+        var accClient = new AccountClient();
+        return await accClient.GetAccountInfo(accessToken);
     }
 
     private void SaveKeys(Credentials credentials)
@@ -140,6 +149,8 @@ public class PlayerCredentials : MonoBehaviour
         var httpClient = new LoginClient();
         var result = await httpClient.Logout(key);
 
+        _isActionDone = true;
+        
         if(result == null || result.message == null || result.message.Length == 0)
             return;
         

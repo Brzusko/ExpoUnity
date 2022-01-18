@@ -11,6 +11,7 @@ namespace Brzusko.HTTP
         protected override string BaseURI { get => BackendStaticConfig.AccountURL; }
 
         protected readonly string _createPath = "/create";
+        protected readonly string _getPath = "/get";
 
         public AccountClient()
         {
@@ -28,6 +29,19 @@ namespace Brzusko.HTTP
             
             response = result.Result;
 
+            return response;
+        }
+
+        public async Task<AccountDetails> GetAccountInfo(string token)
+        {
+            var accessToken = new AccessToken { token = token };
+            AccountDetails response = null;
+            var result = await this.Post<AccountDetails, AccessToken>(_getPath, accessToken);
+
+            if(result.Error != null)
+                return response;
+            
+            response = result.Result;
             return response;
         }
     }

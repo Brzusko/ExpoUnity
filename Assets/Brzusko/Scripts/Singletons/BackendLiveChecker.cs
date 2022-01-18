@@ -17,6 +17,7 @@ public class BackendLiveChecker : MonoBehaviour
     private readonly ServiceType[] _criticalServices = {
         ServiceType.AuthService,
         ServiceType.AccountService,
+        ServiceType.VisualsService
     };
 
     private List<ServiceType> _aliveServices = new List<ServiceType>();
