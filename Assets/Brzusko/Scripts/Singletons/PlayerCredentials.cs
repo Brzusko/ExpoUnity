@@ -34,6 +34,7 @@ public class PlayerCredentials : MonoBehaviour
 
     private AccountDetails _playerDetails = null;
     public AccountDetails PlayerDetails => _playerDetails;
+    public string AccessToken => PlayerPrefs.GetString(AUTH_KEY_LOCATION);
     private void Awake()
     {
         if(_instance != null)

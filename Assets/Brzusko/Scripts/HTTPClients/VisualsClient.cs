@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Brzusko.JSONPayload;
+using UnityEngine;
 
 namespace Brzusko.HTTP
 {
@@ -9,21 +10,17 @@ namespace Brzusko.HTTP
         protected override string BaseURI { get => BackendStaticConfig.VisualsURL; }
         protected static readonly string _getSexPath = "/get";
         protected static readonly string _updateSex = "/update";
-        public async Task<Sex> GetSex(string token)
+        public async Task<string> GetSex(string token)
         {
             var accessToken = new AccessToken{ token = token };
             var result = await this.Post<SexSuccess, AccessToken>(_getSexPath, accessToken);
-            if(result.Error != null)
-                return null;
             return result.Result.sex;
         }
 
-        public async Task<Sex> UpdateSex(string token, int sex)
+        public async Task<string> UpdateSex(string token, int sex)
         {        
-            var accessToken = new AccessToken { token = token };
-            var result = await this.Post<SexSuccess, AccessToken>(_updateSex, accessToken);
-            if(result.Error != null)
-                return null;
+            var updatePayload= new SexUpdate { token = token, sex = sex };
+            var result = await this.Post<SexSuccess, SexUpdate>(_updateSex, updatePayload);
             return result.Result.sex;
         }
     }

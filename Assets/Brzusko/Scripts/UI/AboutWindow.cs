@@ -1,8 +1,12 @@
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Brzusko.Events;
+using Brzusko.HTTP;
+using Brzusko.Enums;
+using Brzusko.JSONPayload;
 
 public class AboutWindow : Window
 {
@@ -10,6 +14,9 @@ public class AboutWindow : Window
 
     [SerializeField]
     private TMP_Text _loginText;
+
+    [SerializeField]
+    private SexSwitch3D _sexSwitcher;
 
     public override bool Active 
     { 
@@ -34,9 +41,12 @@ public class AboutWindow : Window
         DisconnectEvents();
     }
 
-    public void OnLoginComplete(object sender, BasicMassage message)
+    public async void OnLoginComplete(object sender, BasicMassage message)
     {
-        UpdatePlayerName(PlayerCredentials.Instance.PlayerDetails.name);   
+        UpdatePlayerName(PlayerCredentials.Instance.PlayerDetails.name);
+        var visualClient = new VisualsClient();
+        var sex = await visualClient.GetSex(PlayerCredentials.Instance.AccessToken);
+        _sexSwitcher.Value = SexMap.SexualMap.ContainsKey(sex) ? SexMap.SexualMap[sex] : 0;
     }
 
     private void ConnectEvents()

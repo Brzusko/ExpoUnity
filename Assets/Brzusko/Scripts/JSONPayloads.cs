@@ -62,18 +62,11 @@ namespace Brzusko.JSONPayload
         public Success success;
         public LoginCred credentials;
     }
-
-    [Serializable]
-    public class Sex : Payload
-    {
-        public string sex;
-    }
-
     [Serializable]
     public class SexSuccess : Payload
     {
         public Success message;
-        public Sex sex;
+        public string sex;
     }
 
     [Serializable]
@@ -81,5 +74,12 @@ namespace Brzusko.JSONPayload
     {
         public string name;
         public int power;
+    }
+
+    [Serializable]
+    public class SexUpdate : Payload
+    {
+        public string token;
+        public int sex;
     }
 }

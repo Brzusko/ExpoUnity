@@ -7,6 +7,18 @@ public class SexSwitch3D : Switch3D
     [SerializeField]
     private GameObject[] _models;
 
+    public override int Value 
+    { 
+        get => base.Value;
+        set
+        {
+            base.Value = value;
+            foreach(var model in _models)
+                model.SetActive(false);
+            _models[_index].SetActive(true);
+        }
+    }
+
     protected override void Start()
     {
         base.Start();
