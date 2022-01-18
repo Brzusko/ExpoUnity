@@ -38,6 +38,9 @@ public class Bootstrapper : MonoBehaviour
     private static Bootstrapper _instance;
     public Bootstrapper Instance => _instance;
 
+    [SerializeField]
+    private bool _isServer = false;
+
     private async void Start()
     {
         await LoadBasicScenes();
