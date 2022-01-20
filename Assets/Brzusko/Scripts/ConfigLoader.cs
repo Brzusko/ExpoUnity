@@ -11,6 +11,8 @@ public static class BackendStaticConfig
     public static string AccountURL;
     public static string VisualsURL;
     public static string PositionURL;
+    public static string ServerAddress;
+    public static int ServerPort;
 
     public static Stack<Tuple<ServiceType, string>> GetURIs()
     {
@@ -78,5 +80,7 @@ public class ConfigLoader : MonoBehaviour
         BackendStaticConfig.AuthURL = fileData.AuthURL;
         BackendStaticConfig.PositionURL = fileData.PositionURL;
         BackendStaticConfig.VisualsURL = fileData.VisualsURL;
+        BackendStaticConfig.ServerAddress = fileData.ServerAddress;
+        BackendStaticConfig.ServerPort = fileData.ServerPort;
     }
 }

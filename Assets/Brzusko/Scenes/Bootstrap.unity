@@ -258,7 +258,12 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  - m_AssetGUID: 38d0bc69b99b25142b2e02e53ba6bc5a
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   _bootstrapCamera: {fileID: 22787313}
+  _isServer: 1
 --- !u!114 &1808686035
 MonoBehaviour:
   m_ObjectHideFlags: 0

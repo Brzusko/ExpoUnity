@@ -10,7 +10,8 @@ public class BackendConfigSO : ScriptableObject
     public string AccountURL;
     public string VisualsURL;
     public string PositionURL;
-
+    public static string ServerAddress;
+    public static int ServerPort;
     public Stack<Tuple<ServiceType, string>> GetURIs()
     {
         return new Stack<Tuple<ServiceType, string>>
@@ -30,6 +31,8 @@ public class BackendConfigFileData
     public string AccountURL;
     public string VisualsURL;
     public string PositionURL;
+    public string ServerAddress;
+    public int ServerPort;
 }
 
 public enum ServiceType

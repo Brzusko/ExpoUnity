@@ -36,19 +36,29 @@ public class Bootstrapper : MonoBehaviour
     private bool _applicationExitIsActive = false;
     private SceneWrapper _currentScene = null;
     private static Bootstrapper _instance;
-    public Bootstrapper Instance => _instance;
+    public static Bootstrapper Instance => _instance;
 
     [SerializeField]
     private bool _isServer = false;
+    public bool IsServer => _isServer;
 
     private async void Start()
     {
+        _instance = this;
         await LoadBasicScenes();
+
         GetReferences();
+
+        if(_isServer)
+        {
+            _loadingScreen.Active = false;
+            await LoadScene(SceneType.Simulation);
+            return;
+        }
+
         EnableInputs();
         ConnectEvents();
         _backendLiveChecker.StartPinging(); 
-        _instance = this;
     }
 
     private void OnDestroy()
@@ -85,8 +95,11 @@ public class Bootstrapper : MonoBehaviour
     public async Task LoadScene(SceneType sceneToLoad)
     {
         if((int)sceneToLoad >= _scenes.Length) return;
-        _loadingScreen.Active = true;
-        _loadingScreen.ChangeLoadingInfo($"Loading: {sceneToLoad.ToString()}");
+        if(!_isServer)
+        {
+            _loadingScreen.Active = true;
+            _loadingScreen.ChangeLoadingInfo($"Loading: {sceneToLoad.ToString()}");
+        }
         await Task.Delay(3 * 1000);
         var sceneRef = _scenes[(int)sceneToLoad]; 
         var sceneInstance = await sceneRef.LoadSceneAsync(LoadSceneMode.Additive, true).Task;

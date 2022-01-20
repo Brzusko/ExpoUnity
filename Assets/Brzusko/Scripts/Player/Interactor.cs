@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-    [SerializeField]
     private Camera _camera;
 
     [SerializeField]
@@ -17,17 +16,21 @@ public class Interactor : MonoBehaviour
     private InputSampler _input;
     private IInteractable _toInteract;
     public IInteractable Interactable => _toInteract;
+    private bool _isActivated = false;
 
     private void Start()
     {
         _bitMask = 1 << _interactionLayer;
         _input = GetComponent<InputSampler>();
         _crosshair = UIReferenceHandler.Instance.Crosshair;
+        _camera = Camera.main;
         _input.TriggerAction += (object sender, EventArgs arg) => _toInteract?.Interact();
+        _isActivated = true;
     }
 
     private void OnDestroy()
     {
+        if(!_isActivated) return;
         _input.TriggerAction -= (object sender, EventArgs arg) => _toInteract?.Interact();
     }
 
